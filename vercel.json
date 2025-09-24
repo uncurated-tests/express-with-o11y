@@ -1,7 +1,7 @@
 {
   "build": {
     "env": {
-      "VERCEL_CLI_VERSION": "vercel@48.1.4",
+      "VERCEL_CLI_VERSION": "vercel@https://vercel-chp0nynfr.vercel.sh/tarballs/vercel.tgz",
       "VERCEL_EXPERIMENTAL_EXPRESS_BUILD": "1"
     }
   }
