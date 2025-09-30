@@ -8,6 +8,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("static"));
 
+console.log('APP IS STARTING')
+
+setTimeout(() => {
+  console.log("✅ Fake DB connection established!");
+}, 5000);
+
 // Home route - HTML
 app.get("/", (req, res) => {
   res.send("Hello World");
