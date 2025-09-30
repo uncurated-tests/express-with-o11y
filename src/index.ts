@@ -10,6 +10,9 @@ app.use(express.static("static"));
 
 console.log('APP IS STARTING')
 
+app.get('title')
+app.get('etag')
+
 setTimeout(() => {
   console.log("✅ Fake DB connection established!");
 }, 5000);
