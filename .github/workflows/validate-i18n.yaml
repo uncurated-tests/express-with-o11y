@@ -1,0 +1,21 @@
+name: Validate i18n files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate_i18n:
+    name: i18n Is Valid
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check i18n.json exists
+        run: |
+          if [ ! -f "i18n.json" ]; then
+            echo "Error: i18n.json not found at root of repository"
+            exit 1
+          fi
+          echo "i18n.json found successfully"
