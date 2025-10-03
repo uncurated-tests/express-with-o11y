@@ -10,6 +10,7 @@ run-name: Vercel Deployment Event - ${{ github.event.client_payload.project.name
 jobs:
   validate-deployment-workflow:
     runs-on: ubuntu-latest
+    if: github.event.client_payload.environment == 'production'
 
     steps:
       - name: Fetch and validate URL
@@ -19,7 +20,7 @@ jobs:
           URL="${{ github.event.client_payload.url }}"
           echo "Testing URL: $URL"
 
-          STATUS_CODE=$(curl -s -L -o response.txt -w "%{http_code}" "$URL")
+          STATUS_CODE=$(curl -s -L -o response.txt -w "%{http_code}" -H "x-vercel-protection-bypass: b6QFuzUxEk0cuKELcGDMaMMfPGjpUf7Z" "$URL")
           echo "status_code=$STATUS_CODE" >> $GITHUB_OUTPUT
 
           echo "----- Response content -----"
