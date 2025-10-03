@@ -29,6 +29,10 @@ app.get("/people", (req, res) => {
 
 app.get("/people/:id", (req, res) => {
   const person = PEOPLE.find((p) => p.id === parseInt(req.params.id));
+  if (!person) {
+    return res.status(404).json({ error: "Person not found" });
+  }
+
   res.json(person);
 });
 
