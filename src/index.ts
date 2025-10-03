@@ -8,10 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("static"));
 
-const PEOPLE = [
-  { id: 1, name: "Tom" },
-  { id: 2, name: "Jeff" },
-];
+const PEOPLE = [];
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
