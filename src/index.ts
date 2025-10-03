@@ -11,6 +11,7 @@ app.use(express.static("static"));
 const PEOPLE = [
   { id: 1, name: "Tom" },
   { id: 2, name: "Jeff" },
+  { id: 3, name: "Ricardo" },
 ];
 
 app.get("/", (req, res) => {
