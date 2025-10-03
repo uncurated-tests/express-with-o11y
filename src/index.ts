@@ -8,38 +8,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("static"));
 
-console.log('APP IS STARTING')
+const PEOPLE = [
+  { id: 1, name: "Tom" },
+  { id: 2, name: "Jeff" },
+];
 
-app.get('title')
-app.get('etag')
-
-setTimeout(() => {
-  console.log("✅ Fake DB connection established!");
-}, 5000);
-
-// Home route - HTML
 app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.get("/about", function (req, res) {
-  res.render("basic", { pageTitle: "About", name: "John" });
-});
-
-// Example API endpoint - JSON
-app.get("/users/:id", (req, res) => {
-  const userId = req.params.id;
-  return res.send(`User ID: ${userId}`);
-});
-
-app.get("/blog/*splat", (req, res) => {
-  const splat = req.params["splat"];
-  return res.send(`Blog post ${splat.join(".")}`);
-});
-
-// Health check
-app.get("/healthz", (req, res) => {
   res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+app.get("/message", (req, res) => {
+  // make this take a query param for the message
+  const message = req.query.message ?? "Hello, demo days!";
+  res.json({ message });
+});
+
+app.get("/people", (req, res) => {
+  res.json(PEOPLE);
+});
+
+app.get("/people/:id", (req, res) => {
+  const person = PEOPLE.find((p) => p.id === parseInt(req.params.id));
+  res.json(person);
 });
 
 export default app;
