@@ -1,0 +1,41 @@
+name: Smoke Test
+
+on:
+  repository_dispatch:
+    types:
+      - "vercel.deployment.ready"
+
+run-name: Vercel Deployment Event - ${{ github.event.client_payload.project.name }} (${{ github.event.client_payload.state.type }})
+
+jobs:
+  validate-deployment-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch and validate URL
+        id: result
+        run: |
+          set -e
+          URL="${{ github.event.client_payload.url }}"
+          echo "Testing URL: $URL"
+
+          STATUS_CODE=$(curl -s -L -o response.txt -w "%{http_code}" "$URL")
+          echo "status_code=$STATUS_CODE" >> $GITHUB_OUTPUT
+
+          echo "----- Response content -----"
+          cat response.txt
+          echo ""
+          echo "----------------------------"
+
+          if [ "$STATUS_CODE" -ne 200 ]; then
+            echo "❌ Failed: Expected 200, got $STATUS_CODE"
+            exit 1
+          fi
+
+          if grep -qi "Hello" response.txt; then
+            echo "✅ Success: Found 'Hello' in response"
+            exit 0
+          else
+            echo "❌ Failed: 'Hello' not found in response"
+            exit 1
+          fi
