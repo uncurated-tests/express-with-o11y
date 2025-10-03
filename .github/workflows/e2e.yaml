@@ -33,10 +33,10 @@ jobs:
             exit 1
           fi
 
-          if grep -qi "Hello" response.txt; then
-            echo "✅ Success: Found 'Hello' in response"
+          if grep -q '"status":"ok"' response.txt; then
+            echo "✅ Success: Status is 'ok'"
             exit 0
           else
-            echo "❌ Failed: 'Hello' not found in response"
+            echo "❌ Failed: Expected status 'ok' in JSON response"
             exit 1
           fi
